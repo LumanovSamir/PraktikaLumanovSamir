@@ -16,9 +16,9 @@ namespace Kursowaya_Lumanov
         }
 
         // Методы ввода-вывода
-        public void Input()
+        public void Input() //При неправильном вводе значений программа вылетает с ошибкой
         {
-            Console.WriteLine("Вводите коэффиценты через пробел");
+            Console.WriteLine("Вводите коэффиценты через пробел"); //Если ввести пробел в конце выводится ошибка
             string input = Console.ReadLine();
             string[] coeffs = input.Split(' ');
             coefficients = new List<double>();
@@ -126,7 +126,7 @@ namespace Kursowaya_Lumanov
 
             sum.Output("Сумма полиномов");
             product.Output("Произведение полиномов");
-            multipliedByScalar.Output("Полином, умноженный на 2");
+            multipliedByScalar.Output("Полином, умноженный на 2"); //пользователь не может изменить число без редактирования кода
             integral.Output("Интеграл полинома");
             derivative.Output("Производная полинома");
 
