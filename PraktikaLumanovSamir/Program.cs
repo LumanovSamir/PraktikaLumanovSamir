@@ -16,15 +16,23 @@ namespace Kursowaya_Lumanov
         }
 
         // Методы ввода-вывода
-        public void Input() //При неправильном вводе значений программа вылетает с ошибкой
+        public void Input()
         {
-            Console.WriteLine("Вводите коэффиценты через пробел"); //Если ввести пробел в конце выводится ошибка
+            Console.WriteLine("Введите коэффициенты через пробел:");
             string input = Console.ReadLine();
-            string[] coeffs = input.Split(' ');
+            string[] coeffs = input.Trim().Split(' ');
             coefficients = new List<double>();
             foreach (string coeff in coeffs)
             {
-                coefficients.Add(double.Parse(coeff));
+                double coefficient;
+                if (!double.TryParse(coeff, out coefficient))
+                {
+                    Console.WriteLine("Ошибка: Не удалось преобразовать в число.");
+                    Console.ReadKey();
+                    Environment.Exit(0);
+                    return;
+                }
+                coefficients.Add(coefficient);
             }
         }
 
@@ -113,22 +121,37 @@ namespace Kursowaya_Lumanov
 
             Console.WriteLine();
 
-            poly1.Output("Первый полином");
-            poly2.Output("Второй полином");
+            poly1.Output("Первый полином:");
+            poly2.Output("Второй полином:");
 
             Console.WriteLine();
 
             Polynomial sum = poly1.Add(poly2);
             Polynomial product = poly1.Multiply(poly2);
-            Polynomial multipliedByScalar = poly1.Multiply(2);
-            Polynomial integral = poly1.Integrate();
-            Polynomial derivative = poly1.Differentiate();
 
             sum.Output("Сумма полиномов");
+
             product.Output("Произведение полиномов");
-            multipliedByScalar.Output("Полином, умноженный на 2"); //пользователь не может изменить число без редактирования кода
-            integral.Output("Интеграл полинома");
-            derivative.Output("Производная полинома");
+
+            Console.WriteLine();
+
+            Console.WriteLine("Введите число, на которое хотите умножить первый полином:");
+            double scalar;
+            while (!double.TryParse(Console.ReadLine(), out scalar))
+            {
+                Console.WriteLine("Ошибка: Не удалось преобразовать в число. Попробуйте еще раз:");
+            }
+
+            Polynomial multipliedByScalar = poly1.Multiply(scalar);
+            multipliedByScalar.Output("Полином, умноженный на число");
+
+            Console.WriteLine();
+
+            Polynomial integral = poly1.Integrate();
+            integral.Output("Интеграл первого полинома");
+
+            Polynomial derivative = poly1.Differentiate();
+            derivative.Output("Производная первого полинома");
 
             Console.WriteLine();
 
@@ -136,4 +159,5 @@ namespace Kursowaya_Lumanov
             Console.ReadKey();
         }
     }
+
 }
